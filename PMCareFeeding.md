@@ -5,7 +5,7 @@ author:
   - name: John Ehrlinger
     affiliation: Microsoft
     email: john.ehrling@microsoft.com
-date: "`r format(Sys.Date(), '%B %d, %Y')`"
+date: "January 10, 2018"
 output:
   rmdformats::readthedown:
     highlight: kate
@@ -47,25 +47,7 @@ Reactive maintenance is a _replace after failure_ strategy. This strategy ensure
 
 The following figure details the life of a set of 50 devices (stacked along the y-axis) and the service life time is aligned along the x-axis. Each device fails at some point in time denoted by the red "x", ending the devices service life. It's obvious that this strategy maximizes device life (utilization), but at the cost of failures at unknown time.
 
-```{r react, echo=FALSE, fig.cap="Reactive Maintenance strategy"}
-suppressPackageStartupMessages(library('ggplot2'))
-suppressPackageStartupMessages(library('dplyr'))
-suppressPackageStartupMessages(library('tidyr'))
-set.seed(1024)
-theme_set(theme_bw())
-devs <- data.frame(id=1:50)
-devs$life <- 12 - rnorm(n=50, sd=1.5)
-devs$pvt <- 10
-
-devs$pvt[devs$pvt > devs$life] <- devs$life[devs$pvt > devs$life] 
-devs$mnt <- devs$life -.5
-plt <- ggplot(devs) +
-  geom_point(aes(x=id, y=life), shape=4, color="red") +
-  geom_linerange(aes(x=id, ymin=0, ymax=life), alpha=.3) +
-  coord_flip()
-
-plt
-```
+![Reactive Maintenance strategy](PMCareFeeding_files/figure-html/react-1.png)
 
 A reactive maintenance strategy is acceptable when there is little safety risk, or if the device failure is not catastrophic, causing more expensive damage. This is typically the strategy we use for home items and even some auto parts.
 
@@ -77,10 +59,7 @@ Preventative maintenance replaces components on a specific schedule, regardless 
 
 Using the same devices in the previous figure, imagine we instituted a preventative maintenance strategy of replacing devices at a service life time of 10 (indicated by the vertical dashed line). The following figure shows how this strategy will capture and prevent a large number of failures. However, many of these devices could have been in service much longer, and it is still possible to miss some failures.
 
-```{r, echo=FALSE, fig.cap="Preventative Maintenance strategy"}
-plt + geom_hline(aes(yintercept = 10), linetype = "dashed", color = "blue") +
-  geom_linerange(aes(x=id, ymin=0, ymax=pvt))
-```
+![Preventative Maintenance strategy](PMCareFeeding_files/figure-html/unnamed-chunk-1-1.png)
 
 The preventative maintenance schedule time may be chosen by determining how many failures are tolerable for the business, either using cost, customer safety or some combination of related factors. In our example case, we allow about 10% of the devices to fail. We could shorten the acceptable service life if we wanted to ensure no failures, or lengthen it if we were tolerant of more failures. 
 
@@ -90,15 +69,7 @@ The goal of the predictive maintenance strategy is to both maximize the useful s
 
 The following figure shows how a perfect preventative maintenance strategy could replace any device directly before a failure, maximizing component life, and minimizing failure events.
 
-```{r, echo=FALSE, fig.cap="Predictive Maintenance strategy"}
-ggplot(devs) +
-  geom_point(aes(x=id, y=life), shape=4, color="red", alpha = .3) +
-  geom_point(aes(x=id, y=mnt), shape=1, color="blue") +
-  geom_linerange(aes(x=id, ymin=0, ymax=mnt), alpha=.5) +
-  geom_hline(aes(yintercept = 10), linetype = "dashed", color = "blue", alpha = .5) +
-  coord_flip()
-
-```
+![Predictive Maintenance strategy](PMCareFeeding_files/figure-html/unnamed-chunk-2-1.png)
 
 Where reactive and preventative maintenance strategies require some initial thought, once the strategy is in place, maintaining the strategy requires little effort. Predictive maintenance strategies, in contrast have assumptions and consequences during and after implementation. The remainder of this article will address some of these concerns.
 
