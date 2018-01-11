@@ -5,7 +5,7 @@ author:
   - name: John Ehrlinger
     affiliation: Microsoft
     email: john.ehrling@microsoft.com
-date: "January 10, 2018"
+date: "January 11, 2018"
 output:
   rmdformats::readthedown:
     highlight: kate
@@ -124,7 +124,7 @@ An alternative strategy would be to deploy the model on one population of device
  
 # Conclusion
 
-In this age of AI for everyone, much thought has been given to how to build and deploy machine learning solutions. This article details some of the work required both before and after the machine learning solution has been developed. 
+In this age of Aritificial intelligence (AI) for everyone, much thought has been given to how to build and deploy machine learning solutions. This article details some of the work required both before and after the machine learning solution has been developed. 
 
   * Specifics about What data is required? Am I ready to develop an machine learning solution? Have I captured enough failure events to build a useful predictive maintenance solution?
   * What will be the actual product delivered? Once I have a solution, how can I use this to improve my maintenance strategy?
