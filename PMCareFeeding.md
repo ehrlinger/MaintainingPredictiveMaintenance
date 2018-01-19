@@ -5,7 +5,7 @@ author:
   - name: John Ehrlinger
     affiliation: Microsoft
     email: john.ehrling@microsoft.com
-date: "January 11, 2018"
+date: "January 19, 2018"
 output:
   rmdformats::readthedown:
     highlight: kate
@@ -35,7 +35,7 @@ The AML gallery currently contains two predictive maintenance example scenarios:
  
  https://docs.microsoft.com/en-us/azure/machine-learning/preview/scenario-deep-learning-for-predictive-maintenance
 
-This article is written specifically to prepare users interested in using their own data in deploying a customized predictive maintenance model. We will discuss the prerequisites to building and requirements for maintaining an intelligent, machine learning predictive maintenance solution. We will define what predictive maintenance means and discuss data requirements for creating a solution. We also discuss the end result of the product and how to maintain your operationalized machine learning solution. 
+This article is written specifically to prepare users interested in using their own data to deploy customized predictive maintenance scenarios. We will discuss the prerequisites to building and requirements for maintaining an intelligent, machine learning predictive maintenance solution. We will define what predictive maintenance means and discuss data requirements for creating a solution. We also discuss the end result of the product and how to maintain your operationalized machine learning solution. 
 
 # Equipment maintenance
 
@@ -110,7 +110,7 @@ A frequent request centers on retraining the predictive maintenance model. When 
 
 In predictive maintenance settings, retraining our model becomes difficult. To see why, remember that the goal of the predictive maintenance solution is to remove components before they fail. The issue becomes clear by examining the predictive maintenance figure above. If we created a perfect model, the solution would remove **all** failure events from the population. Since having the failure events is critical to training the supervised method, retraining a predictive maintenance solution would actually degrade the model, since there is now no new information from which the model can learn. 
 
-Also note that by removing the failure events, we can not infer when the device would have truly failed. This is also the main problem when attempting to transition away from a preventative maintenance strategy. The preventive maintenance figure indicates we have removed the ability to know when the device will actually fail. Because of this, once a predictive or preventive maintenance strategy has been deployed, changes to the system must be carefully weighed. As your business moves from away reactive maintenance, new restrictions on changes possible in the future are imposed. 
+Also note that by removing the failure events, we can not infer when the device would have truly failed. This is also the main problem when attempting to transition away from a preventative maintenance strategy. The preventive maintenance figure indicates we have removed the ability to know when the device will actually fail. Because of this, Once a predictive or preventive maintenance strategy has been deployed, changes to the system must be carefully weighed. As your business moves from away reactive maintenance, new restrictions on changes possible in the future are imposed. 
 
   1. Removing either an implemented predictive or preventive strategy will certainly lead to an increase in the number of failures.
   
@@ -120,10 +120,10 @@ Also note that by removing the failure events, we can not infer when the device 
   
 This does not mean that we cannot improve on the solutions once implemented. One option would be to build and deploy an initial predictive maintenance solution, and continue to collect failure data. We can not hope to deploy a perfect solution that captures all failures. Instead, we assume that the model has captured the most likely failure modes, and by collecting more data, we can add an additional model to capture the next level of failures. Each subsequent model would be additive in nature, and ranking of failures can be combined to further reduce the failure rate. 
 
-An alternative strategy would be to deploy the model on one population of devices, and continue to collect data an a separate population. In fact, sometimes serving the model to one population of devices is staightforward as companies may have different types of maintenance contracts with different end customers - one set of customers may continue with a no-maintenance contract plan where failure data would still be able to be collected. A new model could be tested on the combined population to verify the new model would have captured failures predicted by the original model. If the level of prediction is acceptable within some measure, the business could decide to replace the original model. 
+An alternative strategy would be to deploy the model on one population of devices, and continue to collect data an a separate population. In fact, sometimes serving the model to one population of devices is straight forward as companies may have different types of maintenance contracts with different end customers operating the same or similar devices - one set of customers may continue with a no-maintenance contract plan where failure data could still be able to be collected. A new model could then be tested on the combined population to verify the captured failures predicted by the original model. If the level of prediction is acceptable within some measure, the business could then decide to replace the original model. 
 
-Alternatively, some companies have internal lab testing environments, and collect data for predictive maintenance solutions through stress testing of the equipment over time in their labs. Of course, it is often difficult to replicate the real world effects so this data often needs to be supplemented.
- 
+It could also be possible to add a _test-to-failure_ protocol to either verify model predictions, or to extend service life beyond a preventative service life time frame. This would incur the additional expense of bench test operations which could easily out pace any financial advantage of a machine learning maintenance strategy. This trade off would have to be quantitatively determined based on business criteria and operating expenses.
+
 # Conclusion
 
 In this age of Artificial intelligence (AI) for everyone, much thought has been given to how to build and deploy machine learning solutions. This article details some of the work required both before and after the machine learning solution has been developed. 

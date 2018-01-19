@@ -21,9 +21,9 @@ output:
     toc: true
 fontsize: 10pt
 ---
-Microsoft has recently launched [Azure Machine Learning](https://docs.microsoft.com/en-us/azure/machine-learning/preview/overview-what-is-azure-ml) (AML) to public preview. The updated services include a Workbench application plus command-line tools to assist in developing and managing machine learning solutions through the entire data science life cycle. An Experimentation Service handles the execution of machine learning experiments and provides project management, Git integration, access control, roaming, and sharing of work. The Model Management Service allows data scientists and dev-ops teams to deploy predictive models into a wide variety of environments. Model versions and lineage are tracked from training runs to deployments while being stored, registered, and managed in the cloud. 
+Microsoft has recently launched [Azure Machine Learning services](https://docs.microsoft.com/en-us/azure/machine-learning/preview/overview-what-is-azure-ml) (AML) to public preview. The updated services include a Workbench application plus command-line tools to assist in developing and managing machine learning solutions through the entire data science life cycle. An Experimentation Service handles the execution of machine learning experiments and provides project management, Git integration, access control, roaming, and sharing of work. The Model Management Service allows data scientists and dev-ops teams to deploy predictive models into a wide variety of environments. Model versions and lineage are tracked from training runs to deployments while being stored, registered, and managed in the cloud. 
 
-Once [AML Workbench is installed](https://docs.microsoft.com/en-us/azure/machine-learning/preview/quickstart-installation), the app connects to a Gallery of prebuilt real world data science scenario projects to help new users explore Azure machine learning, as well as give users a jump start on their specific data science scenarios. 
+Once [AML Workbench is installed](https://docs.microsoft.com/en-us/azure/machine-learning/preview/quickstart-installation), the app connects to a Gallery of prebuilt real world data science scenario projects to help new users explore Azure Machine Learning, as well as give users a jump start on their specific data science scenarios. 
 
 The AML gallery currently contains two predictive maintenance example scenarios:
 
@@ -35,7 +35,7 @@ The AML gallery currently contains two predictive maintenance example scenarios:
  
  https://docs.microsoft.com/en-us/azure/machine-learning/preview/scenario-deep-learning-for-predictive-maintenance
 
-This article is written specifically to prepare users interested using their own data in deploying a customized predictive maintenance scenarios. We will discuss the prerequisites to building and requirements for maintaining an intelligent, machine learning predictive maintenance solution. We will define what predictive maintenance means and discuss data requirements for creating a solution. We also discuss the end result of the product and how to maintain your operationalized machine learning solution. 
+This article is written specifically to prepare users interested in using their own data to deploy customized predictive maintenance scenarios. We will discuss the prerequisites to building and requirements for maintaining an intelligent, machine learning predictive maintenance solution. We will define what predictive maintenance means and discuss data requirements for creating a solution. We also discuss the end result of the product and how to maintain your operationalized machine learning solution. 
 
 # Equipment maintenance
 
@@ -104,7 +104,7 @@ Where reactive and preventative maintenance strategies require some initial thou
 
 # Predictive maintenance requirements
 
-A predictive maintenance machine learning strategy is a _supervised learning_ process, meaning we have data detailing the full life history of a series of devices, we use this data to characterize how other devices, unseen but assumed to be identical, would behave over their service life.
+A predictive maintenance machine learning strategy is a _supervised learning_ process, meaning we have data detailing the full life history of a series of devices. We use this data to characterize how other devices, unseen but assumed to be identical, would behave over their service life.
 
 In order to ensure you have the complete life history of your set of training devices, a supervised machine learning method will require at least the following: 
 
@@ -114,7 +114,7 @@ In order to ensure you have the complete life history of your set of training de
 
 **Event history** In order to predict failures, the data must contain examples of those failures. A rule of thumb is that your data should contain on the order of 10-30 events per feature you'd like to resolve. This means that your data should contain at least 300 examples of the failure types you are interested in predicting in order to build a reasonable machine learning solution. More examples will result in better, more generalizable predictive maintenance solutions.
 
-In general, you will have a mix of devices that have failed, and those that are still in service. Or you may have devices that have failed for the specific reason you are interested in, collected with devices that have failed for other reasons. In both of these cases, using all the available devices having both failures of interest, and not will help the machine learning solution discern between the different device behaviors.
+In general, you will have a mix of devices that have failed, and those that are still in service. Or you may have devices that have failed for the specific reason you are interested in, collected with devices that have failed for other reasons. In both of these cases, using all the available devices both having and not having failures of interest will help the machine learning solution discern between the different device behaviors.
 
 # Predictive maintenance deployment
 
@@ -137,11 +137,11 @@ The deployment idea is to periodically run the full population of devices curren
 
 A frequent request centers on retraining the predictive maintenance model. When using standard time series models, the approach is to retrain continually, using the current set of observed data to predict forward in time. In this way, the model is continually being updated to capture changes in behavior not seen in training the original model.
 
-In predictive maintenance settings, retraining our model becomes difficult. To see why, remember that the goal of the predictive maintenance solution is to remove components before they fail. The issue becomes clear by examining the predictive maintenance figure above. If we created a perfect model, the solution would remove **all** failure events from the population. Since having the failure events is critical to training the supervised method, retraining a predictive maintenance solution would actually degrade the model, since there is now no new information for the model to learn from. 
+In predictive maintenance settings, retraining our model becomes difficult. To see why, remember that the goal of the predictive maintenance solution is to remove components before they fail. The issue becomes clear by examining the predictive maintenance figure above. If we created a perfect model, the solution would remove **all** failure events from the population. Since having the failure events is critical to training the supervised method, retraining a predictive maintenance solution would actually degrade the model, since there is now no new information from which the model can learn. 
 
 Also note that by removing the failure events, we can not infer when the device would have truly failed. This is also the main problem when attempting to transition away from a preventative maintenance strategy. The preventive maintenance figure indicates we have removed the ability to know when the device will actually fail. Because of this, Once a predictive or preventive maintenance strategy has been deployed, changes to the system must be carefully weighed. As your business moves from away reactive maintenance, new restrictions on changes possible in the future are imposed. 
 
-  1. Removing an implemented predictive/preventive strategy will certainly lead to an increase in the number of failures.
+  1. Removing either an implemented predictive or preventive strategy will certainly lead to an increase in the number of failures.
   
   2. Because predictive and preventive maintenance are designed specifically to change the predicted quantity, any data collected during this implementation must be interpreted with that information in mind. This is similar to knowing the maintenance history when building the solution to begin with. 
 
@@ -149,8 +149,10 @@ Also note that by removing the failure events, we can not infer when the device 
   
 This does not mean that we cannot improve on the solutions once implemented. One option would be to build and deploy an initial predictive maintenance solution, and continue to collect failure data. We can not hope to deploy a perfect solution that captures all failures. Instead, we assume that the model has captured the most likely failure modes, and by collecting more data, we can add an additional model to capture the next level of failures. Each subsequent model would be additive in nature, and ranking of failures can be combined to further reduce the failure rate. 
 
-An alternative strategy would be to deploy the model on one population of devices, and continue to collect data an a separate population. A new model could be tested on the combined population to verify the new model would have captured failures predicted by the original model. If the level of prediction is acceptable within some measure, the business could decide to replace the original model.
- 
+An alternative strategy would be to deploy the model on one population of devices, and continue to collect data an a separate population. In fact, sometimes serving the model to one population of devices is straight forward as companies may have different types of maintenance contracts with different end customers operating the same or similar devices - one set of customers may continue with a no-maintenance contract plan where failure data could still be able to be collected. A new model could then be tested on the combined population to verify the captured failures predicted by the original model. If the level of prediction is acceptable within some measure, the business could then decide to replace the original model. 
+
+It could also be possible to add a _test-to-failure_ protocol to either verify model predictions, or to extend service life beyond a preventative service life time frame. This would incur the additional expense of bench test operations which could easily out pace any financial advantage of a machine learning maintenance strategy. This trade off would have to be quantitatively determined based on business criteria and operating expenses.
+
 # Conclusion
 
 In this age of Artificial intelligence (AI) for everyone, much thought has been given to how to build and deploy machine learning solutions. This article details some of the work required both before and after the machine learning solution has been developed. 
